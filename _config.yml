@@ -1,9 +1,9 @@
-title: devlopr
-subtitle: A Jekyll Theme Built for Developers
+title: Le Quyet Tien
+subtitle: Software Developer
 description: >- # this means to ignore newlines until "baseurl:"
-  devlopr-jekyll is a Jekyll Theme Built For Developers
+  lequyettien.it@gmail.com
 
-url: "" # the base hostname & protocol for your site, e.g. https://example.github.io
+url: "https://lequyettien.github.io" # the base hostname & protocol for your site, e.g. https://example.github.io
 baseurl: "" # the subpath of your site, e.g. /blog
 
 urls:
@@ -11,83 +11,79 @@ urls:
       url: /about
     - text: Blog
       url: /blog
-    - text: Gallery
-      url: /gallery
-    - text: Shop
-      url : /shop
     - text: Contact Me
       url : /contact
-    - text: Styleguide
-      url: /styleguide
-    - text: Get Started
-      url: /get-started
 
 # Edit these details
 
 author_logo: profile.png
-author: John Doe
-author_bio: Hello, My Name is John Doe. I love to Code and Design. devlopr-jekyll is a theme built for developers.
-author_email: "johndoe@gmail.com"
-author_location: India
-author_website_url: "http://johndoe.com"
+author: Le Quyet Tien
+author_bio: Hello, My Name is Le Quyet Tien. I love to Code and Design.
+author_email: "lequyettien.it@gmail.com"
+author_location: Vietnam
+author_website_url: "https://lequyettien.github.io"
 
-author_work_experiences:
-            - company_name: Google
-              company_logo: google.png
-              company_url: https://google.com
-              designation: Software Engineer
-              description: Worked on various Google Products
-              visibility: true
-            - company_name: Microsoft
-              company_logo: microsoft.png
-              company_url: https://microsoft.com
-              designation: Azure Developer
-              description: Worked on various Azure Cloud Products
+author_work_experiences: 
+            - company_name: EZ Active Vietnam
+              company_logo: ezactive.png
+              company_url: https://www.ezactive.com
+              designation: Software Developer
+              description: Worked on various EZ Active Vietnam
               visibility: true
 
 author_education_details:
-              - college_logo: mit.png
-                college_name: MIT
-                college_url: https://mit.org
-                college_degree: CS Engineer
-                description: Bachelor of Technology
+              - college_logo: ntu.png
+                college_name: Nha Trang University
+                college_url: https://ntu.edu.vn
+                college_degree: IT Engineer
+                description: Bachelor's degree, Infomation Technology
                 visibility: true
 
 author_project_details:
-              - project_thumbnail: gamershub.png
-                project_title: Gamers Hub
-                project_description: A Platform built for Gamers and Game Devs
-                project_url: https://gamershub.in
+              - project_thumbnail: js.png
+                project_title: HKFC - Junior Soccer
+                project_description: Wordpress, Season Registration, Club Management
+                project_url: https://www.hkfcjuniorsoccer.com/
                 visibility: true
-              - project_thumbnail: hack4r.PNG
-                project_title: Hack4r
-                project_description: A Platform built for Hackers and Penetration Testers
-                project_url: https://hack4r.com
+              - project_thumbnail: hkjfl.png
+                project_title: Hong Kong Junior Football League
+                project_description: Wordpress, League Registration, League Management
+                project_url: https://www.hkjfl.com/
+                visibility: true
+              - project_thumbnail: vf.png
+                project_title: Valley Fort
+                project_description: Season Registration, Club Management
+                project_url: https://valleyfort.com/
+                visibility: true
+              - project_thumbnail: sgb.png
+                project_title: SG Basketball
+                project_description: Court Booking, Academy Registration, CBL League Registration
+                project_url: https://sgbasketball.com/
                 visibility: true
 
 # social links
-twitter_username: johndoe
-github_username:  johndoe
-facebook_username: johndoe
-linkedin_username: johndoe
-behance_username: johndoe
-instagram_username: johndoe
-medium_username: johndoe
-telegram_username: johndoe
-dribbble_username: johndoe
-flickr_username: johndoe
+twitter_username: LeQuyetTien74
+github_username:  LeQuyetTien
+facebook_username: LeQuyetTien74
+linkedin_username: LeQuyetTien
+behance_username: LeQuyetTien
+instagram_username: LeQuyetTien74
+medium_username: LeQuyetTien74
+telegram_username: LeQuyetTien
+dribbble_username: LeQuyetTien
+flickr_username: LeQuyetTien
 
 #for comments using disqus
-disqus_shortname: sujay-kundu
+disqus_shortname: LeQuyetTien
 
 # wakatime username (coding activity)
-wakatime_username: sujaykundu777
+wakatime_username: LeQuyetTien
 
 # mailchimp embedded form url (newsletter):
-mailchimp_form_url: https://sujaykundu.us10.list-manage.com/subscribe/post?u=50bab1c85eae24ecfb0f68361&amp;id=3a2dd721d0
+mailchimp_form_url: https://github.us19.list-manage.com/subscribe/post?u=e4bdc3fc8b853af82c02414cc&id=b153cedd6a
 
 # formspree (contact form)
-formspree_email: johndoe@gmail.com
+formspree_email: lequyettien.it@gmail.com
 
 # syntax highlighter
 markdown: kramdown
@@ -95,7 +91,7 @@ highlighter: rouge
 permalink: pretty
 
 # google analytics
-google_analytics: UA-46783401-10
+google_analytics: UA-158658777-1
 
 # Choose what to show ( can be true or false)
 show_author_work_experiences: true
