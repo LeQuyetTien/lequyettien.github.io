@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Tạo hybrid app với Ionic
+title: Create Hybrid App with Ionic
 author: Le Quyet Tien
-date: '2020-03-01 17:00:00 +0700'
+date: '2020-03-24 17:00:00 +0700'
 category: ionic
 summary: Hướng dẫn tạo ứng dụng đầu tiên với Ionic
 thumbnail: ionic-framework-og.png
