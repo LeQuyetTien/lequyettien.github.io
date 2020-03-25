@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://lequyettien.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lequyettien.github.io/" rel="alternate" type="text/html" /><updated>2020-03-25T14:19:08+00:00</updated><id>https://lequyettien.github.io/feed.xml</id><title type="html">Le Quyet Tien</title><subtitle>lequyettien.it@gmail.com</subtitle><author><name>Le Quyet Tien</name></author><entry><title type="html">Two-Factor Authentication (2FA) with Google Authenticator &amp;amp; PHP</title><link href="https://lequyettien.github.io/php/2020/03/25/two-factor-authentication-with-php/" rel="alternate" type="text/html" title="Two-Factor Authentication (2FA) with Google Authenticator &amp; PHP" /><published>2020-03-25T08:34:00+00:00</published><updated>2020-03-25T08:34:00+00:00</updated><id>https://lequyettien.github.io/php/2020/03/25/two-factor-authentication-with-php</id><content type="html" xml:base="https://lequyettien.github.io/php/2020/03/25/two-factor-authentication-with-php/">&lt;h1 id=&quot;two-factor-authentication-2fa-with-google-authenticator--php&quot;&gt;Two-Factor Authentication (2FA) with Google Authenticator &amp;amp; PHP&lt;/h1&gt;
+
+&lt;p&gt;Gần đây mình có nghiên cứu và triển khai chức năng xác thực hai yếu tố trong một project PHP bằng cách sử dụng Google Authenticator. Vì vậy hôm nay mình muốn chia sẻ nó cho những ai chưa làm được.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-xác-thực-2-yếu-tố-là-gì&quot;&gt;1. Xác thực 2 yếu tố là gì?&lt;/h2&gt;
+
+&lt;p&gt;Xác thực hai yếu tố, hay còn được viết tắt là 2FA (Two-Factor Authentication), là một cách rất an toàn để bảo vệ tài khoản trực tuyến của bạn. Nó hoạt động bằng cách yêu cầu bạn thêm một bước nữa vào quá trình đăng nhập thông thường của bạn để định danh người đăng nhập có phải là bạn hay không, hay là một ai khác. Qúa trình 2FA dựa trên 2 yếu tố cơ bản, yếu tố thứ nhất được hiểu đơn giản là những gì bạn biết (username và password của bạn) và yếu tố thứ hai gắn liền với những gì bạn có (điện thoại di động của bạn).&lt;/p&gt;
+
+&lt;h2 id=&quot;2-google-authenticator-hoạt-động-như-thế-nào&quot;&gt;2. Google Authenticator hoạt động như thế nào?&lt;/h2&gt;
+
+&lt;p&gt;Google Authenticator là một ứng dụng miễn phí cho smartphone. Nó hoạt động như sau:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Khi bật 2FA, ứng dụng mà bạn đang bảo mật sẽ tạo ra một mã QR, người dùng scan nó bằng Google Authenticator để thêm profile vào ứng dụng.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Sau khi đăng nhập bằng username và password, người dùng sẽ sử dụng mã xác thực từ Google Authenticator để điền vào bước xác thực thứ 2.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Mã xác thực sẽ được tạo mới sau mỗi 30 giây.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-cài-đặt-google-authenticator&quot;&gt;3. Cài đặt Google Authenticator&lt;/h2&gt;
+
+&lt;p&gt;Cài đặt ứng dụng Google Authenticator trên điện thoại:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&quot;&gt;Android&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://apps.apple.com/us/app/google-authenticator/id388497605&quot;&gt;iOS&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-triển-khai-google-authenticator-trên-website-sử-dụng-php&quot;&gt;4. Triển khai Google Authenticator trên website sử dụng PHP&lt;/h2&gt;
+
+&lt;h3 id=&quot;41-cài-đặt-google-authenticator-php-class&quot;&gt;4.1. Cài đặt Google Authenticator PHP class&lt;/h3&gt;
+
+&lt;p&gt;Chúng ta sẽ sử dụng thư viện nguồn mở &lt;a href=&quot;https://github.com/PHPGangsta/GoogleAuthenticator&quot;&gt;PHPGangsta/GoogleAuthenticator&lt;/a&gt; để:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Tạo mã QR cho người dùng scan khi họ bật 2FA.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Xác minh mã người dùng nhập khi đăng nhập.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;composer require phpgangsta/googleauthenticator:dev-master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;42-tạo-mã-qr&quot;&gt;4.2. Tạo mã QR&lt;/h3&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;require_once&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'PHPGangsta/GoogleAuthenticator.php'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$ga&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PHPGangsta_GoogleAuthenticator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$secret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ga&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createSecret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Lưu biến này vào database để verify sau này&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$qrCodeUrl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ga&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getQRCodeGoogleUrl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Blog'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  
+&lt;span class=&quot;c1&quot;&gt;// Trả về mã QR này để người dùng scan bằng ứng dụng Google Authenticator trên điện thoại&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;lt;img src=&quot;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$qrCodeUrl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'&quot;/&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;43-xác-minh-mã&quot;&gt;4.3. Xác minh mã&lt;/h3&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;require_once&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'PHPGangsta/GoogleAuthenticator.php'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$ga&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PHPGangsta_GoogleAuthenticator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// TODO: lấy giá trị biến $secret của người dùng đã đăng nhập từ database&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$check_this_code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$_POST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'code'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$checkResult&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ga&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;verifyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$check_this_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$checkResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Success!'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Invalid login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Le Quyet Tien</name></author><category term="php" /><summary type="html">Two-Factor Authentication (2FA) with Google Authenticator &amp;amp; PHP</summary></entry><entry><title type="html">Create Hybrid App with Ionic</title><link href="https://lequyettien.github.io/ionic/2020/03/24/create-hybrid-app-with-ionic/" rel="alternate" type="text/html" title="Create Hybrid App with Ionic" /><published>2020-03-24T10:00:00+00:00</published><updated>2020-03-24T10:00:00+00:00</updated><id>https://lequyettien.github.io/ionic/2020/03/24/create-hybrid-app-with-ionic</id><content type="html" xml:base="https://lequyettien.github.io/ionic/2020/03/24/create-hybrid-app-with-ionic/">&lt;h1 id=&quot;create-hybrid-app-with-ionic&quot;&gt;Create hybrid app with Ionic&lt;/h1&gt;
+
+&lt;h2 id=&quot;yêu-cầu&quot;&gt;Yêu cầu&lt;/h2&gt;
+
+&lt;p&gt;Trước khi bắt đầu với Ionic chúng ta cần cài đặt &lt;a href=&quot;https://nodejs.org/en/&quot;&gt;Node.js&lt;/a&gt;. Trong trang chủ Node.js chúng ta sẽ có 2 phiên bản là LTS (Bản ổn định) và Current (Bản mới nhất). Chúng ta nên chọn cài đặt bản LTS vì nó ổn định hơn.&lt;/p&gt;
+
+&lt;h2 id=&quot;cài-đặt-ionic&quot;&gt;Cài đặt Ionic&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt; @ionic/cli
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;tạo-ứng-dụng-đầu-tiên&quot;&gt;Tạo ứng dụng đầu tiên&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ionic start myApp tabs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;ionic start: là cú pháp tạo mới ứng dụng của Ionic&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;myApp: là tên ứng dụng&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;tabs: là loại ứng dụng. Có 3 loại chính sau: &lt;em&gt;blank&lt;/em&gt;, &lt;em&gt;tabs&lt;/em&gt;, &lt;em&gt;sidemenu&lt;/em&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;chạy-ứng-dụng&quot;&gt;Chạy ứng dụng&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;myApp
+ionic serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Le Quyet Tien</name></author><category term="ionic" /><summary type="html">Create hybrid app with Ionic</summary></entry></feed>
